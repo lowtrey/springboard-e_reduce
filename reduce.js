@@ -7,7 +7,12 @@ Examples:
     extractValue(arr,'name') // ['Elie', 'Tim', 'Matt', 'Colt']
 */
 
-function extractValue(arr, key) {}
+function extractValue(arr, key) {
+  return arr.reduce((accumArr, nextObj) => {
+    accumArr.push(nextObj[key]);
+    return accumArr;
+  }, []);
+}
 
 /*
 Write a function called vowelCount which accepts a string and returns an object 
@@ -23,7 +28,20 @@ Examples:
     vowelCount('I Am awesome and so are you') // {i: 1, a: 4, e: 3, o: 3, u: 1};
 */
 
-function vowelCount(str) {}
+function vowelCount(str) {
+  const vowels = "aeiou";
+  let splitString = str.toLowerCase().split("");
+  return splitString.reduce((accumObj, nextChar) => {
+    if (vowels.indexOf(nextChar) !== -1) {
+      if (accumObj[nextChar]) {
+        accumObj[nextChar] += 1;
+      } else {
+        accumObj[nextChar] = 1;
+      }
+    }
+    return accumObj;
+  }, {});
+}
 
 /*
 Write a function called addKeyAndValue which accepts an array of objects and returns 
@@ -42,7 +60,13 @@ Examples:
        ]
 */
 
-function addKeyAndValue(arr, key, value) {}
+function addKeyAndValue(arr, key, value) {
+  return arr.reduce((accumArr, nextObj) => {
+    nextObj[key] = value;
+    accumArr.push(nextObj);
+    return accumArr;
+  }, []);
+}
 
 /*
 Write a function called partition which accepts an array and a callback and returns 
@@ -71,4 +95,16 @@ Examples:
     partition(names, isLongerThanThreeCharacters) // [['Elie', 'Colt', 'Matt'], ['Tim']]
 */
 
-function partition(arr, callback) {}
+function partition(arr, callback) {
+  return arr.reduce(
+    (accumArr, nextElement) => {
+      if (callback(nextElement)) {
+        accumArr[0].push(nextElement);
+      } else {
+        accumArr[1].push(nextElement);
+      }
+      return accumArr;
+    },
+    [[], []]
+  );
+}
